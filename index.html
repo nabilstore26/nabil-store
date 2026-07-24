@@ -2,26 +2,136 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Nabil Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nabil Store | نبيل ستور</title>
+
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5}
-header{background:#0b6efd;color:#fff;padding:20px;text-align:center}
-main{padding:20px}
-.card{background:#fff;padding:20px;border-radius:10px;max-width:700px;margin:auto}
-.btn{display:inline-block;background:#25D366;color:#fff;padding:10px 16px;text-decoration:none;border-radius:8px}
-footer{text-align:center;padding:20px;color:#666}
+body{
+margin:0;
+font-family:Tahoma,Arial,sans-serif;
+background:#f5f5f5;
+color:#333;
+}
+
+header{
+background:#0d6efd;
+color:white;
+padding:25px;
+text-align:center;
+}
+
+header h1{
+margin:0;
+font-size:32px;
+}
+
+header p{
+margin-top:10px;
+font-size:18px;
+}
+
+.container{
+width:90%;
+max-width:1100px;
+margin:auto;
+padding:30px 0;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+padding:20px;
+box-shadow:0 2px 8px rgba(0,0,0,.15);
+text-align:center;
+}
+
+.card img{
+width:100%;
+border-radius:10px;
+}
+
+.card h3{
+margin:15px 0 10px;
+}
+
+.price{
+font-size:22px;
+color:#0d6efd;
+font-weight:bold;
+}
+
+button{
+background:#198754;
+color:white;
+border:none;
+padding:12px 20px;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+}
+
+button:hover{
+background:#146c43;
+}
+
+footer{
+background:#222;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
 </style>
+
 </head>
+
 <body>
-<header><h1>Nabil Store</h1><p>متجرك الإلكتروني</p></header>
-<main>
+
+<header>
+<h1>نبيل ستور</h1>
+<p>متجر رقمي لبيع المنتجات والخدمات الرقمية</p>
+</header>
+
+<div class="container">
+
+<h2>المنتجات</h2>
+
+<div class="products">
+
 <div class="card">
-<h2>مرحبًا بك</h2>
-<p>هذه النسخة الأولى من متجر Nabil Store.</p>
-<p><a class="btn" href="https://wa.me/967776687299">اطلب عبر واتساب</a></p>
+<img src="https://via.placeholder.com/300x200" alt="">
+<h3>كتاب إلكتروني</h3>
+<p class="price">10 دولار</p>
+<button>شراء الآن</button>
 </div>
-</main>
-<footer>© Nabil Store</footer>
+
+<div class="card">
+<img src="https://via.placeholder.com/300x200" alt="">
+<h3>دورة الذكاء الاصطناعي</h3>
+<p class="price">25 دولار</p>
+<button>شراء الآن</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/300x200" alt="">
+<h3>قوالب Canva</h3>
+<p class="price">15 دولار</p>
+<button>شراء الآن</button>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+© 2026 Nabil Store - جميع الحقوق محفوظة
+</footer>
+
 </body>
-</html>
+  </html>
