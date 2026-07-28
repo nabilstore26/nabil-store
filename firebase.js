@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
 
 // كود إعدادات Firebase الخاص بمشروع Nabil-Biznes
 const firebaseConfig = {
@@ -14,9 +15,19 @@ const firebaseConfig = {
 
 // تهيئة تطبيق Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const analytics = typeof window !== "undefined" ? getAnalytics(app) : null;
 
 // تصدير العناصر لاستخدامها في باقي ملفات المشروع
-export { app, analytics };
+export { app, analytics, db };
 export default app;
+ 
+
+
+
+
+
+
+
 
