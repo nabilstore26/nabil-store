@@ -1,1 +1,362 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | النبيل بزنس</title>
+<link id="favicon" rel="icon" type="image/png" href="https://i.ibb.co/L5k6vzp/1000472329.png">
+
+<style>
+:root {
+  --primary-blue: #0b51a1;
+  --primary-gold: #d4af37;
+  --dark-blue: #083871;
+  --bg-color: #f1f5f9;
+  --card-bg: #ffffff;
+  --danger-color: #ef4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+body { background: var(--bg-color); color: #1e293b; padding-bottom: 50px; }
+
+header {
+  background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 4px solid var(--primary-gold);
+}
+
+.container { max-width: 900px; margin: 25px auto; padding: 0 15px; }
+
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-bottom: 25px;
+  border: 1px solid #e2e8f0;
+}
+
+h2 { color: var(--primary-blue); font-size: 1.3rem; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+
+form { display: flex; flex-direction: column; gap: 12px; }
+label { font-size: 13px; font-weight: bold; color: #475569; }
+input, select, textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--primary-blue); }
+
+.btn {
+  background: var(--primary-blue);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn:hover { background: var(--dark-blue); }
+
+.preview-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* جدول المنتجات */
+.products-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.products-table th, .products-table td { padding: 12px; text-align: right; border-bottom: 1px solid #e2e8f0; font-size: 13.5px; }
+.products-table th { background: #f8fafc; color: var(--primary-blue); }
+
+.btn-delete {
+  background: var(--danger-color);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.btn-delete:hover { background: #dc2626; }
+
+.img-preview { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; }
+
+.home-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 13px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>لوحة إدارة المنتجات والخدمات 🛠️</h1>
+  <p>النبيل بزنس للتسويق والحلول الرقمية</p>
+</header>
+
+<div class="container">
+
+  <!-- إعدادات أيقونة المتجر -->
+  <div class="card">
+    <h2>🎨 أيقونة وشعار المتجر (Favicon)</h2>
+    <div class="preview-box">
+      <img id="logo-preview-img" src="https://i.ibb.co/L5k6vzp/1000472329.png" class="img-preview" alt="شعار المتجر">
+      <div style="flex-grow: 1;">
+        <label>اختر صورة شعار جديد للمتجر:</label>
+        <input type="file" id="logo-file-input" accept="image/*">
+      </div>
+    </div>
+  </div>
+
+  <!-- نموذج إضافة منتج جديد -->
+  <div class="card">
+    <h2>➕ إضافة منتج / خدمة جديدة</h2>
+    <form id="addProductForm">
+      <div>
+        <label>اسم المنتج أو الخدمة:</label>
+        <input type="text" id="p-title" placeholder="مثال: تصميم هوية بصرية كاملة" required>
+      </div>
+
+      <div>
+        <label>السعر (أدخل الرقم مع العملة أو اكتب "مجاناً"):</label>
+        <input type="text" id="p-price" placeholder="مثال: $50 أو 5000 ريال" required>
+      </div>
+
+      <div>
+        <label>القسم / التصنيف:</label>
+        <select id="p-category">
+          <option value="design">تصميم وهُوية</option>
+          <option value="marketing">تسويق وإدارة</option>
+          <option value="courses">دورات وتدريب</option>
+        </select>
+      </div>
+
+      <div>
+        <label>صورة المنتج (ارفع صورة من جهازك):</label>
+        <input type="file" id="p-img-file" accept="image/*" required>
+        <div class="preview-box" id="img-preview-container" style="display: none;">
+          <img id="product-img-preview" src="" class="img-preview" alt="معاينة">
+          <span style="font-size: 12px; color: #64748b;">معاينة الصورة المختارة</span>
+        </div>
+      </div>
+
+      <div>
+        <label>وصف قصير للمنتج:</label>
+        <textarea id="p-desc" rows="3" placeholder="اكتب تفاصيل الخدمة مميزاتها..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn" id="save-btn">حفظ ونشر المنتج 🚀</button>
+    </form>
+  </div>
+
+  <!-- قائمة المنتجات الحالية -->
+  <div class="card">
+    <h2>📦 قائمة المنتجات المضافة</h2>
+    <div style="overflow-x: auto;">
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th>الصورة</th>
+            <th>الاسم</th>
+            <th>السعر</th>
+            <th>القسم</th>
+            <th>الإجراء</th>
+          </tr>
+        </thead>
+        <tbody id="admin-products-list">
+          <!-- يتم إدراج المنتجات هنا تلقائياً -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="text-align: center;">
+    <a href="index.html" class="home-link">🏠 العودة للموقع الرئيسي</a>
+  </div>
+
+</div>
+
+<!-- ربط جافاسكريبت المباشر بـ Firebase -->
+<script type="module">
+  // 🔒 نظام حماية بسيط بكلمة مرور قبل فتح اللوحة
+  const ADMIN_PASSWORD = "123456"; // يمكنك تغيير كلمة المرور من هنا
+  
+  if (sessionStorage.getItem('admin_authenticated') !== 'true') {
+    const userPass = prompt("من فضلك أدخل كلمة المرور للوصول إلى لوحة التحكم:");
+    if (userPass === ADMIN_PASSWORD) {
+      sessionStorage.setItem('admin_authenticated', 'true');
+    } else {
+      alert("كلمة المرور غير صحيحة! سيتم تحويلك للواجهة الرئيسية.");
+      window.location.href = "index.html";
+    }
+  }
+
+  import { db } from './firebase.js';
+  import { collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const form = document.getElementById('addProductForm');
+  const productsList = document.getElementById('admin-products-list');
+  const pImgFile = document.getElementById('p-img-file');
+  const productImgPreview = document.getElementById('product-img-preview');
+  const imgPreviewContainer = document.getElementById('img-preview-container');
+  let currentBase64Image = "";
+
+  // 1. تحويل صورة المنتج المرفوعة إلى Base64
+  pImgFile.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("حجم الصورة كبير جداً! يرجى اختيار صورة أقل من 2 ميجابايت.");
+        pImgFile.value = "";
+        imgPreviewContainer.style.display = "none";
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        currentBase64Image = event.target.result;
+        productImgPreview.src = currentBase64Image;
+        imgPreviewContainer.style.display = "flex";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // 2. تحديث أيقونة المتجر (Favicon)
+  document.getElementById('logo-file-input').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const base64Logo = event.target.result;
+        document.getElementById('favicon').href = base64Logo;
+        document.getElementById('logo-preview-img').src = base64Logo;
+        localStorage.setItem('site_logo', base64Logo);
+        alert('تم تحديث شعار وأيقونة المتجر بنجاح! 🎉');
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // استرجاع الشعار عند التحميل
+  const savedLogo = localStorage.getItem('site_logo');
+  if (savedLogo) {
+    document.getElementById('favicon').href = savedLogo;
+    document.getElementById('logo-preview-img').src = savedLogo;
+  }
+
+  // 3. جلب وتحديث جدول المنتجات
+  async function loadAdminProducts() {
+    productsList.innerHTML = '<tr><td colspan="5" style="text-align:center;">جاري تحميل المنتجات...</td></tr>';
+    try {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      productsList.innerHTML = '';
+
+      if(querySnapshot.empty) {
+        productsList.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا توجد منتجات مضافة حتى الآن.</td></tr>';
+        return;
+      }
+
+      querySnapshot.forEach((docSnap) => {
+        const item = docSnap.data();
+        const tr = document.createElement('tr');
+        
+        tr.innerHTML = `
+          <td><img src="${item.img || 'https://via.placeholder.com/50'}" class="img-preview" alt="صورة"></td>
+          <td><strong>${item.title}</strong></td>
+          <td>${item.price}</td>
+          <td>${getCatName(item.category)}</td>
+          <td>
+            <button class="btn-delete" data-id="${docSnap.id}">حذف 🗑️</button>
+          </td>
+        `;
+        productsList.appendChild(tr);
+      });
+
+      // ربط أزرار الحذف
+      document.querySelectorAll('.btn-delete').forEach(button => {
+        button.addEventListener('click', function() {
+          deleteProduct(this.getAttribute('data-id'));
+        });
+      });
+
+    } catch (e) {
+      console.error("خطأ في جلب البيانات: ", e);
+      productsList.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">حدث خطأ أثناء تحميل البيانات!</td></tr>';
+    }
+  }
+
+  function getCatName(cat) {
+    if(cat === 'design') return 'تصميم وهُوية';
+    if(cat === 'marketing') return 'تسويق وإدارة';
+    if(cat === 'courses') return 'دورات وتدريب';
+    return cat;
+  }
+
+  // 4. إضافة منتج جديد
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!currentBase64Image) {
+      alert("يرجى اختيار صورة للمنتج أولاً!");
+      return;
+    }
+
+    const btn = document.getElementById('save-btn');
+    btn.disabled = true;
+    btn.innerText = 'جاري الحفظ... ⏳';
+
+    const newProduct = {
+      title: document.getElementById('p-title').value,
+      price: document.getElementById('p-price').value,
+      category: document.getElementById('p-category').value,
+      img: currentBase64Image,
+      desc: document.getElementById('p-desc').value,
+      createdAt: new Date()
+    };
+
+    try {
+      await addDoc(collection(db, "products"), newProduct);
+      alert('تمت إضافة المنتج بنجاح! 🎉');
+      form.reset();
+      currentBase64Image = "";
+      imgPreviewContainer.style.display = "none";
+      loadAdminProducts();
+    } catch (e) {
+      alert('حدث خطأ أثناء حفظ المنتج: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.innerText = 'حفظ ونشر المنتج 🚀';
+    }
+  });
+
+  // 5. حذف منتج
+  async function deleteProduct(id) {
+    if (confirm('هل أنت تأكد من رغبتك في حذف هذا المنتج؟')) {
+      try {
+        await deleteDoc(doc(db, "products", id));
+        alert('تم حذف المنتج بنجاح.');
+        loadAdminProducts();
+      } catch (e) {
+        alert('خطأ أثناء الحذف: ' + e.message);
+      }
+    }
+  }
+
+  // التحميل الأولي
+  loadAdminProducts();
+</script>
+
+</body>
+</html>
 
